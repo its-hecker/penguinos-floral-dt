@@ -10,6 +10,6 @@
 # February 2020. We miss you David, R.I.P.
 #
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/custom_coral.mk \
-    $(LOCAL_DIR)/custom_flame.mk
+PRODUCT_MAKEFILES := $(LOCAL_DIR)/aospa_flame.mk
+
+COMMON_LUNCH_CHOICES := aospa_flame-cp2a-userdebug
