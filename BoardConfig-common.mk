@@ -66,6 +66,8 @@ BOARD_KERNEL_CMDLINE += \
 BOARD_KERNEL_IMAGE_NAME := Image.lz4
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
+# Select the PixelOS/Lineage rules for Image.lz4 and Floral DTBO packaging.
+FLORAL_USE_LINEAGE_KERNEL := true
 TARGET_KERNEL_CONFIG := floral_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/msm-4.14
 TARGET_NEEDS_DTBOIMAGE := true

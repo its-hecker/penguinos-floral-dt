@@ -3,19 +3,19 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# PixelOS configuration must precede device/vendor inheritance.
-# The real IR hardware provider is supplied by the Floral Face ID plugin.
-TARGET_FACE_UNLOCK_SUPPORTED := false
-PRODUCT_NO_CAMERA := true
-TARGET_SCREEN_WIDTH := 1440
-TARGET_SCREEN_HEIGHT := 3040
-CUSTOM_BUILD := coral
+# Use PenguinOS's product configuration with Floral's stock IR provider.
+FLORAL_HARDWARE_FACE := true
+TARGET_EXCLUDES_APERTURE := true
+TARGET_EXCLUDE_GMODULES := true
 
-# Retain the source-built mainline configuration used by the working Floral base.
+# Keep mainline modules source-built for the legacy Floral vendor.
 PRODUCT_BUILD_IGNORE_APEX_CONTRIBUTION_CONTENTS := true
 PRODUCT_MODULE_BUILD_FROM_SOURCE := true
 
-$(call inherit-product, vendor/custom/config/common_full_phone.mk)
+# Only the build tools are used from the PixelOS Lineage vendor tree.
+PRODUCT_SOURCE_ROOT_DIRS += -vendor/hecker/floral/kernel-build
+
+$(call inherit-product, vendor/aospa/target/product/aospa-target.mk)
 
 #
 # All components inherited here go to system image
@@ -26,7 +26,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/generic_system.mk)
 # Enable mainline checking
 PRODUCT_ENFORCE_ARTIFACT_PATH_REQUIREMENTS := relaxed
 
-# Google system artifacts selected by PixelOS's bundled GMS.
+# Google system artifacts shared by the bundled GMS products.
 PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/apex/com.google.android.extservices.apex \
     system/app/GoogleExtShared/GoogleExtShared.apk \
@@ -62,8 +62,9 @@ include device/google/coral/coral/device.mk
 PRODUCT_BRAND := google
 PRODUCT_DEVICE := coral
 PRODUCT_MANUFACTURER := Google
+PRODUCT_GMS_CLIENTID_BASE := android-google
 PRODUCT_MODEL := Pixel 4 XL
-PRODUCT_NAME := custom_coral
+PRODUCT_NAME := aospa_coral
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     BuildDesc="coral-user 13 TP1A.221005.002.B2 9382335 release-keys" \
@@ -79,7 +80,6 @@ $(call inherit-product, vendor/hecker/floral/faceid/faceid.mk)
 
 # Use the original signed Camera package tested on Infinity-X Coral.
 $(call inherit-product, device/google/coral/camera/camera.mk)
-PRODUCT_PACKAGES := $(filter-out Aperture Camera2,$(PRODUCT_PACKAGES))
 
 # Preserve bounded startup evidence on userdebug/eng builds.
 include device/google/coral/boot_diagnostics/boot_capture.mk
