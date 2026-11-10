@@ -15,8 +15,10 @@ TARGET_EXCLUDE_GMODULES := true
 PRODUCT_BUILD_IGNORE_APEX_CONTRIBUTION_CONTENTS := true
 PRODUCT_MODULE_BUILD_FROM_SOURCE := true
 
-# Only the build tools are used from the PixelOS Lineage vendor tree.
-PRODUCT_SOURCE_ROOT_DIRS += -vendor/hecker/floral/kernel-build
+# Load the PixelOS kernel header rules without importing its other Soong modules.
+PRODUCT_SOURCE_ROOT_DIRS += \
+    -vendor/hecker/floral/kernel-build/ \
+    vendor/hecker/floral/kernel-build/build/soong/Android.bp
 
 # Keep one provider for memtrack, charging control, and telephony.
 PRODUCT_SOURCE_ROOT_DIRS += \
