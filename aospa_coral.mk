@@ -3,6 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Qualcomm common reads the platform before BoardConfig is loaded.
+TARGET_BOARD_PLATFORM := msmnile
+
 # Use PenguinOS's product configuration with Floral's stock IR provider.
 FLORAL_HARDWARE_FACE := true
 TARGET_EXCLUDES_APERTURE := true
@@ -14,6 +17,12 @@ PRODUCT_MODULE_BUILD_FROM_SOURCE := true
 
 # Only the build tools are used from the PixelOS Lineage vendor tree.
 PRODUCT_SOURCE_ROOT_DIRS += -vendor/hecker/floral/kernel-build
+
+# Keep one provider for memtrack, charging control, and telephony.
+PRODUCT_SOURCE_ROOT_DIRS += \
+    -device/qcom/vendor-common/memtrack/ \
+    -vendor/aospa/interfaces/health/ \
+    -vendor/codeaurora/telephony/
 
 $(call inherit-product, vendor/aospa/target/product/aospa-target.mk)
 
