@@ -67,6 +67,11 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
 
 include device/google/coral/coral/device.mk
 
+# Keep Coral's vendor gralloc handle layout with the Celerity display headers.
+$(call soong_config_set,qtidisplaycommonsys,gralloc_handle_has_no_reserved_size,false)
+$(call soong_config_set,qtidisplaycommonsys,gralloc_handle_has_no_custom_content_md_reserved_size,true)
+$(call soong_config_set,qtidisplaycommonsys,gralloc_handle_has_no_ubwcp,true)
+
 # Device identifier. This must come after all inclusions
 PRODUCT_BRAND := google
 PRODUCT_DEVICE := coral
