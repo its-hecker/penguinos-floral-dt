@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Displayed by PenguinOS Settings > About phone > Maintainer. -->
+    <!-- Official/unofficial status is determined separately by PenguinOS. -->
+    <string name="penguin_maintainer" translatable="false">Hecker</string>
+</resources>
