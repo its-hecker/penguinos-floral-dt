@@ -6,6 +6,9 @@
 # Qualcomm common reads the platform before BoardConfig is loaded.
 TARGET_BOARD_PLATFORM := msmnile
 
+# Coral uses Google's Pixel power-libperfmgr AIDL HAL; do not inherit QTI V6.
+TARGET_PROVIDES_POWERHAL := true
+
 # Use PenguinOS's product configuration with Floral's stock IR provider.
 FLORAL_HARDWARE_FACE := true
 TARGET_EXCLUDES_APERTURE := true
