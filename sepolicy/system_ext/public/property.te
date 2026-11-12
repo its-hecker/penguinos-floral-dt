@@ -1,0 +1,3 @@
+# XTRA daemon control property, retained for Floral's legacy GNSS vendor policy.
+# Matches the pinned LineageOS common/public/property.te declaration.
+system_restricted_prop(xtra_control_prop)
