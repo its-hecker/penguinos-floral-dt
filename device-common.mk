@@ -306,6 +306,12 @@ $(call soong_config_set,lineage_health,fast_charge_node,/sys/class/qcom-battery/
 $(call soong_config_set,lineage_health,fast_charge_value_none,1)
 $(call soong_config_set,lineage_health,fast_charge_value_fast_charge,0)
 
+# Ship the complete official Lineage product FCM for Coral's Lineage AIDL
+# services (LiveDisplay, Touch, and Health). This module is provided by the
+# pinned hardware/lineage/interfaces/compatibility_matrices source.
+PRODUCT_PACKAGES += \
+    framework_compatibility_matrix.lineage.xml
+
 # LiveDisplay
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay-service.sdm
