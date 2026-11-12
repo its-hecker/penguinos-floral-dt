@@ -12,3 +12,10 @@ vndbinder_use(hal_lineage_livedisplay_qti)
 # Allow LiveDisplay to store files under /data/vendor/display and access them
 allow hal_lineage_livedisplay_qti display_vendor_data_file:dir rw_dir_perms;
 allow hal_lineage_livedisplay_qti display_vendor_data_file:file create_file_perms;
+
+# PenguinOS keeps the Lineage LiveDisplay vendor service without inheriting
+# all LineageOS product policy. Register only the required AIDL service type
+# and client/server permissions from the upstream LiveDisplay policy.
+type hal_lineage_livedisplay_service, hal_service_type, service_manager_type;
+binder_call(hal_lineage_livedisplay_client, hal_lineage_livedisplay_server)
+hal_attribute_service(hal_lineage_livedisplay, hal_lineage_livedisplay_service)
