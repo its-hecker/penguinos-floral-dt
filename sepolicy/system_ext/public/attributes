@@ -1,0 +1,5 @@
+# Floral ships LineageOS's QTI LiveDisplay AIDL service on PenguinOS.
+# The HAL is retained, but PenguinOS does not inherit the LineageOS
+# public SEPolicy attributes. AOSP's hal_attribute macro matches the
+# upstream LineageOS hal_attribute_lineage expansion for this HAL.
+hal_attribute(lineage_livedisplay)
