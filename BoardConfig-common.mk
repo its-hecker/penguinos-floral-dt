@@ -102,6 +102,8 @@ TARGET_USERIMAGES_USE_F2FS := true
 
 # Platform
 TARGET_BOARD_PLATFORM := msmnile
+# Floral ships Google's Pixel AIDL Power HAL; omit the Qualcomm V6 provider.
+TARGET_PROVIDES_POWERHAL := true
 
 # Recovery
 TARGET_RECOVERY_FSTAB := $(DEVICE_COMMON_PATH)/init/fstab.hardware
