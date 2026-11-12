@@ -52,6 +52,7 @@
 /vendor/firmware_mnt(/.*)?                                                            u:object_r:firmware_file:s0
 /firmware(/.*)?                                                                    u:object_r:firmware_file:s0
 /dcp_firmware(/.*)?                                                                u:object_r:firmware_file:s0
+/soccp_firmware(/.*)?                                                              u:object_r:firmware_file:s0
 
 # Vendor libs that are exposed to apps (those listed in /vendor/etc/public.libraries.txt
 # and their dependencies)
