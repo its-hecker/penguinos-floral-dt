@@ -130,7 +130,8 @@ ro.oem_unlock_supported=1
 ro.control_privapp_permissions=enforce
 
 # SoC
-ro.soc.manufacturer=Qualcomm
+# PenguinOS exports ro.soc.manufacturer=QTI during vendor property generation.
+# Do not reassign it here: Android 17 rejects conflicting duplicate sysprops.
 ro.soc.model=SM8150
 
 # SurfaceFlinger
