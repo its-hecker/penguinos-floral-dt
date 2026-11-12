@@ -52,6 +52,8 @@ DEVICE_MANIFEST_FILE += $(DEVICE_COMMON_PATH)/manifest.xml
 
 DEVICE_MATRIX_FILE := $(DEVICE_COMMON_PATH)/compatibility_matrix.xml
 DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE := $(DEVICE_COMMON_PATH)/device_framework_matrix_product.xml
+# Add vendor Lineage AIDL interfaces to the device-specific system FCM.
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(DEVICE_COMMON_PATH)/device_framework_matrix_lineage.xml
 
 # Kernel
 BOARD_BOOT_HEADER_VERSION := 2
