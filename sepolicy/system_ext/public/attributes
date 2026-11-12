@@ -3,3 +3,6 @@
 # public SEPolicy attributes. AOSP's hal_attribute macro matches the
 # upstream LineageOS hal_attribute_lineage expansion for this HAL.
 hal_attribute(lineage_livedisplay)
+
+# Pixel touch AIDL HAL retains LineageOS service and vendor policy.
+hal_attribute(lineage_touch)
