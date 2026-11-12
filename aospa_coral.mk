@@ -99,3 +99,7 @@ $(call inherit-product, device/google/coral/camera/camera.mk)
 
 # Preserve bounded startup evidence on userdebug/eng builds.
 include device/google/coral/boot_diagnostics/boot_capture.mk
+# Temporary native USB ADB access for boot-logo debugging on development images.
+# Set PENGUIN_DEV_USB_ADB=false for any release distributed to other users.
+include device/google/coral/debugging/development_adb.mk
+
