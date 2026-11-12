@@ -68,6 +68,10 @@ BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 # Select the PixelOS/Lineage rules for Image.lz4 and Floral DTBO packaging.
 FLORAL_USE_LINEAGE_KERNEL := true
+# PenguinOS does not source LineageOS envsetup.sh; its
+# LLVM_AOSP_PREBUILTS_VERSION is therefore unset during kernel Make.
+# Pin the same Android 17 Clang prebuilt used by Soong for Coral/Flame.
+TARGET_KERNEL_CLANG_VERSION := r584948b
 TARGET_KERNEL_CONFIG := floral_defconfig
 TARGET_KERNEL_SOURCE := kernel/google/msm-4.14
 TARGET_NEEDS_DTBOIMAGE := true
