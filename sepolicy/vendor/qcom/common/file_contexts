@@ -237,6 +237,7 @@
 # firmware images
 #
 /vendor/bt_firmware(/.*)?                                           u:object_r:bt_firmware_file:s0
+/bt_firmware(/.*)?                                                  u:object_r:bt_firmware_file:s0
 
 #Android NN Driver
 /(vendor|system/vendor)/bin/hw/android\.hardware\.neuralnetworks@1\.3-service-qti u:object_r:hal_neuralnetworks_default_exec:s0
