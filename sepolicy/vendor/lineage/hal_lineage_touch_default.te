@@ -1,0 +1,15 @@
+# The Floral Pixel touch HAL is shipped by hardware/google/pixel/touch,
+# but PenguinOS does not import LineageOS's common/vendor touch policy.
+# Retain the upstream domain, executable label and HAL separation.
+type hal_lineage_touch_default, domain;
+hal_server_domain(hal_lineage_touch_default, hal_lineage_touch)
+
+type hal_lineage_touch_default_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_lineage_touch_default)
+
+binder_call(hal_lineage_touch_default, servicemanager)
+
+# AIDL service registration and binder permissions, from Lineage common/dynamic.
+type hal_lineage_touch_service, hal_service_type, service_manager_type;
+binder_call(hal_lineage_touch_client, hal_lineage_touch_server)
+hal_attribute_service(hal_lineage_touch, hal_lineage_touch_service)
