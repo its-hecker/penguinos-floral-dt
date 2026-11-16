@@ -37,7 +37,6 @@ int main() {
     android::sp<IUsbGadget> service = new UsbGadget();
     if (android::base::GetBoolProperty("ro.vendor.penguinos.coral_early_adb", false) &&
         android::base::GetBoolProperty("ro.debuggable", false) &&
-        android::base::GetBoolProperty("ro.adb.secure", false) &&
         !android::base::GetBoolProperty("sys.boot_completed", false)) {
         // Use the HAL's FunctionFS monitor so the connection returns if
         // the host requests adb root and adbd restarts.

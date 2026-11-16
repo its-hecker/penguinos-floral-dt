@@ -36,6 +36,9 @@ else ifeq ($(strip $(PENGUIN_DEV_USB_ADB)),true)
 ifeq ($(filter userdebug eng,$(TARGET_BUILD_VARIANT)),)
 $(error PENGUIN_DEV_USB_ADB=true requires a userdebug or eng build)
 endif
+ifeq ($(TARGET_PRODUCT),aospa_coral)
+PRODUCT_VENDOR_PROPERTIES += ro.vendor.penguinos.coral_early_adb=true
+endif
 PRODUCT_PRODUCT_PROPERTIES := $(filter-out \
     persist.sys.usb.config=% persist.sys.usb.config?=%, \
     $(PRODUCT_PRODUCT_PROPERTIES))
