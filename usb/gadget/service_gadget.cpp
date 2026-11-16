@@ -26,6 +26,7 @@ using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 
 // Generated HIDL files
+using android::hardware::usb::gadget::V1_0::GadgetFunction;
 using android::hardware::usb::gadget::V1_1::IUsbGadget;
 using android::hardware::usb::gadget::V1_1::implementation::UsbGadget;
 
@@ -34,6 +35,14 @@ using android::status_t;
 
 int main() {
     android::sp<IUsbGadget> service = new UsbGadget();
+    if (android::base::GetBoolProperty("ro.vendor.penguinos.coral_early_adb", false) &&
+        android::base::GetBoolProperty("ro.debuggable", false) &&
+        android::base::GetBoolProperty("ro.adb.secure", false) &&
+        !android::base::GetBoolProperty("sys.boot_completed", false)) {
+        // Use the HAL's FunctionFS monitor so the connection returns if
+        // the host requests adb root and adbd restarts.
+        service->setCurrentUsbFunctions(static_cast<uint64_t>(GadgetFunction::ADB), nullptr, 0);
+    }
 
     configureRpcThreadpool(2, true /*callerWillJoin*/);
     status_t status = service->registerAsService();
