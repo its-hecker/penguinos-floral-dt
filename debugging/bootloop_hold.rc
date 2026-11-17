@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: Apache-2.0
+# TEMPORARY CORAL USERDEBUG BOOTLOOP DIAGNOSTICS ONLY.
+# Do not include in public or production builds.
+#
+# Android init normally requests a fatal reboot after repeated crashes of
+# critical services. The current PenguinOS system/core init/service.cpp checks
+# init.svc_debug.no_fatal.<service> before that forced restart. Keep the device
+# accessible for logcat when a *userspace* service repeatedly fails.
+#
+# This cannot stop kernel panics, AVB failures, first-stage init failures,
+# watchdog resets, or explicit sys.powerctl reboots.
+on init && property:ro.debuggable=1
+    setprop init.svc_debug.no_fatal.zygote true
+    setprop init.svc_debug.no_fatal.zygote_secondary true
+    setprop init.svc_debug.no_fatal.surfaceflinger true
+    setprop init.svc_debug.no_fatal.servicemanager true
+    setprop init.svc_debug.no_fatal.hwservicemanager true
+    setprop init.svc_debug.no_fatal.vndservicemanager true
+    setprop init.svc_debug.no_fatal.ueventd true
+    setprop init.svc_debug.no_fatal.vold true
+    setprop init.svc_debug.no_fatal.logd true
+
+# Rescue Party can also request recovery actions on a framework crash loop.
+# Re-apply after /data persistence properties are loaded.
+on post-fs-data && property:ro.debuggable=1
+    setprop persist.sys.disable_rescue true
