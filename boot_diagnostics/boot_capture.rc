@@ -1,3 +1,21 @@
+# These markers reach the kernel console/pstore before framework services.
+# They provide stage evidence if the Android ADB transport never appears.
+# This rc is installed only for userdebug/eng images.
+on early-init && property:ro.debuggable=1
+    write /dev/kmsg "<6>PENGUIN_BOOT_STAGE: second-stage early-init"
+
+on init && property:ro.debuggable=1
+    write /dev/kmsg "<6>PENGUIN_BOOT_STAGE: init"
+
+on post-fs && property:ro.debuggable=1
+    write /dev/kmsg "<6>PENGUIN_BOOT_STAGE: post-fs"
+
+on post-fs-data && property:ro.debuggable=1
+    write /dev/kmsg "<6>PENGUIN_BOOT_STAGE: post-fs-data"
+
+on property:sys.boot_completed=1 && property:ro.debuggable=1
+    write /dev/kmsg "<6>PENGUIN_BOOT_STAGE: boot-completed"
+
 # SPDX-License-Identifier: Apache-2.0
 # Metadata is first-stage mounted on Coral. Start after platform logd startup.
 on init && property:ro.debuggable=1
