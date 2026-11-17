@@ -78,6 +78,11 @@ TARGET_KERNEL_SOURCE := kernel/google/msm-4.14
 TARGET_NEEDS_DTBOIMAGE := true
 
 # Partitions
+# Use the default ext4 sizing on Coral's stock A/B layout. The PixelOS
+# helper otherwise reserves about 1.8 GiB in /product for Google Apps.
+ifeq ($(TARGET_DEVICE),coral)
+WITHOUT_RESERVED_SIZE := true
+endif
 -include vendor/lineage/config/BoardConfigReservedSize.mk
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_DTBOIMG_PARTITION_SIZE := 8388608
