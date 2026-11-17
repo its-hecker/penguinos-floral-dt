@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # TEMPORARY CORAL USERDEBUG BOOTLOOP DIAGNOSTICS ONLY.
 # Do not include in public or production builds.
+# This file is packaged only when PENGUIN_DEV_USB_ADB=true in userdebug/eng.
 #
 # Android init normally requests a fatal reboot after repeated crashes of
 # critical services. The current PenguinOS system/core init/service.cpp checks
@@ -10,6 +11,11 @@
 # This cannot stop kernel panics, AVB failures, first-stage init failures,
 # watchdog resets, or explicit sys.powerctl reboots.
 on init && property:ro.debuggable=1
+    # Private diagnostic image: grant root adbd without an interactive request.
+    # The userdebug adbd will be retried after APEX activation by the USB rc.
+    setprop service.adb.root 1
+    setprop sys.usb.configfs 1
+    setprop sys.usb.config adb
     setprop init.svc_debug.no_fatal.zygote true
     setprop init.svc_debug.no_fatal.zygote_secondary true
     setprop init.svc_debug.no_fatal.surfaceflinger true
