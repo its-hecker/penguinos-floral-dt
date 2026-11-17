@@ -38,6 +38,11 @@ $(error PENGUIN_DEV_USB_ADB=true requires a userdebug or eng build)
 endif
 ifeq ($(TARGET_PRODUCT),aospa_coral)
 PRODUCT_VENDOR_PROPERTIES += ro.vendor.penguinos.coral_early_adb=true
+# Private userdebug-only bootloop hold, packaged into /system init.
+PRODUCT_COPY_FILES += \
+    device/google/coral/debugging/bootloop_hold.rc:$(TARGET_COPY_OUT_SYSTEM)/etc/init/penguin-bootloop-hold.rc
+PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+    system/etc/init/penguin-bootloop-hold.rc
 endif
 PRODUCT_PRODUCT_PROPERTIES := $(filter-out \
     persist.sys.usb.config=% persist.sys.usb.config?=%, \
