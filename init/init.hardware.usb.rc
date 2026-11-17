@@ -117,11 +117,26 @@ on early-fs
     chown system system /config/usb_gadget/g1/strings/0x409/product
     chown system system /config/usb_gadget/g1/strings/0x409/serialnumber
 
-# Start the gadget monitor before the vendor filesystem waits. Init queues the
-# updatable adbd service and starts it as soon as APEX configuration is ready.
-on early-fs && property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
-    setprop sys.usb.configfs 2
+# Debug-only Coral USB ADB. Vendor properties are not necessarily available
+# at early-fs, so use post-fs after the vendor partition has been mounted.
+# Android's init.usb.configfs.rc only recognizes sys.usb.configfs=1.
+on post-fs && property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
+    setprop sys.usb.configfs 1
     start vendor.usb-gadget-hal-1-1
+    setprop sys.usb.config adb
+    start adbd
+
+# Property trigger also covers boards that load vendor props after post-fs.
+on property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
+    setprop sys.usb.configfs 1
+    start vendor.usb-gadget-hal-1-1
+    setprop sys.usb.config adb
+    start adbd
+
+# adbd is updatable via APEX; retry once the current APEX set is activated.
+on property:apexd.status=activated && property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
+    setprop sys.usb.configfs 1
+    setprop sys.usb.config adb
     start adbd
 
 on property:init.svc.console=running
@@ -134,7 +149,8 @@ on property:vendor.usb.contaminantdisable=true
     write /sys/class/power_supply/usb/moisture_detection_enabled 0
 
 on boot
-    setprop sys.usb.configfs 2
+    # configfs=2 prevents the system's normal USB ADB binding triggers.
+    setprop sys.usb.configfs 1
 
 on property:sys.usb.config=none && property:sys.usb.configfs=1
     rm /config/usb_gadget/g1/configs/b.1/f1
