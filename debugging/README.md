@@ -4,6 +4,10 @@ The Pixel 4 XL (`coral`) and Pixel 4 (`flame`) development builds can
 start USB debugging without waiting for Android's Settings app, SystemUI, or
 home screen to load. This mirrors the temporary HeckerOS diagnostic mode.
 
+On Coral, the USB gadget starts at `early-fs` and init queues adbd for
+the moment the ADB APEX becomes available. Enabling USB debugging still
+requires the kernel and first-stage filesystem mounts to succeed.
+
 `aospa_coral.mk` and `aospa_flame.mk` include
 `device/google/coral/debugging/development_adb.mk` after the other device
 product definitions. The fragment is **enabled by default only for

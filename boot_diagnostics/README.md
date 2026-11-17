@@ -3,8 +3,8 @@
 This branch adds a userdebug/eng startup capture because the failed phone boot
 has no usable Android ADB connection, saved crash files or pstore records.
 
-The init service starts at `early-fs`, after Coral's first-stage Metadata mount
-and before filesystem/checkpoint actions or `late-fs` can block on userdata. It uses the existing AOSP `su` diagnostic domain on
+The init service starts at `init`, after Coral's first-stage Metadata mount
+and platform logd startup. It uses the existing AOSP `su` diagnostic domain on
 debug builds; the device-wide SELinux setting and ADB authentication are unchanged.
 The product does not install the capture on `user` builds, and the script also
 checks `ro.debuggable` and skips recovery/fastboot boots.

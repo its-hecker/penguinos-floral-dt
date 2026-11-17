@@ -25,6 +25,8 @@ DEX_PREOPT_DEFAULT := generate-vdex-and-image
 WITH_DEXPREOPT_DEBUG_INFO := false
 
 # A/B support
+# Celerity's snapshot manager requires snapuserd and the Floral 4.14 kernel
+# only supports kernel snapshots. Use regular A/B with dynamic partitions.
 PRODUCT_PACKAGES += \
     checkpoint_gc \
     cppreopts.sh \
@@ -44,8 +46,6 @@ AB_OTA_POSTINSTALL_CONFIG += \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
-
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/launch.mk)
 
 # AiAi Config
 PRODUCT_COPY_FILES += \

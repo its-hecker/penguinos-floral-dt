@@ -14,8 +14,8 @@
 # limitations under the License.
 #
 
-# Configure the gadget after filesystem setup and before networking starts.
-on post-fs-data
+# Configfs and the service managers are available after the init event.
+on early-fs
     mkdir /config/usb_gadget/g1 0770
     mkdir /config/usb_gadget/g1/strings/0x409 0770
     write /config/usb_gadget/g1/bcdUSB 0x0200
@@ -117,12 +117,12 @@ on post-fs-data
     chown system system /config/usb_gadget/g1/strings/0x409/product
     chown system system /config/usb_gadget/g1/strings/0x409/serialnumber
 
-# At this point the ADB APEX is active. The gadget HAL monitors FunctionFS
-# while init continues with the BPF loader and zygote.
-on post-fs-data && property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
+# Start the gadget monitor before the vendor filesystem waits. Init queues the
+# updatable adbd service and starts it as soon as APEX configuration is ready.
+on early-fs && property:ro.vendor.penguinos.coral_early_adb=true && property:ro.debuggable=1
     setprop sys.usb.configfs 2
-    start adbd
     start vendor.usb-gadget-hal-1-1
+    start adbd
 
 on property:init.svc.console=running
     write /sys/class/power_supply/usb/moisture_detection_enabled 0

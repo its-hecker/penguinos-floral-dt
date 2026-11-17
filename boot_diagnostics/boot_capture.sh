@@ -35,8 +35,9 @@ rm -f "$capture_dir"/logcat.txt "$capture_dir"/logcat.txt.[1-3] \
 # of logger errors. Each rotated logcat file is smaller than that limit.
 ulimit -f 512 || exit 1
 {
-    printf 'capture_version=1\nstage=early-fs\ninitial_metadata_free_bytes=%s\n' "$free_bytes"
+    printf 'capture_version=2\nstage=init\ninitial_metadata_free_bytes=%s\n' "$free_bytes"
     printf 'kernel=%s\nboot_id=%s\n' "$(uname -r)" "$(cat /proc/sys/kernel/random/boot_id)"
+    printf 'slot=%s\nbuild=%s\n' "$(getprop ro.boot.slot_suffix)" "$(getprop ro.build.date.utc)"
 } > "$capture_dir/status.txt"
 
 logger_pid=
